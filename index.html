@@ -9,11 +9,11 @@
 	<div id="app">
 		{{ message }}
 		<ul>
-		    <li v-for="answer in answers">
-		      ID: {{ answer.id }},
-		      Voorkeuren: {{ answer.voorkeuren }},
-		      Alcohol per dag: {{ answer.alcohol}}
-		    </li>
+		    <survey-answer
+		      v-for="answer in answers"
+		      v-bind:answer="answer"
+		      v-bind:key="answer.id">
+	    </survey-answer>
 	  	</ul>
 	</div>
 	<script src="index.js"></script>
