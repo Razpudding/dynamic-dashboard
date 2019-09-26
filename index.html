@@ -8,6 +8,13 @@
 <body>
 	<div id="app">
 		{{ message }}
+		<ul>
+		    <li v-for="answer in answers">
+		      ID: {{ answer.id }},
+		      Voorkeuren: {{ answer.voorkeuren }},
+		      Alcohol per dag: {{ answer.alcohol}}
+		    </li>
+	  	</ul>
 	</div>
 	<script src="index.js"></script>
 </body>
