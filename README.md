@@ -26,8 +26,8 @@ If there's no link yet for a step that means I haven't built it yet. Feel free t
 * [Basic Vue setup](https://github.com/Razpudding/dynamic-dashboard/commit/ff6228865af1291be026341dbdbe260ed0ffddb7)
 * [Dynamically creating a list from data](https://github.com/Razpudding/dynamic-dashboard/commit/efcccbe4eb6b1b7af1bc87e4771c6e2aefc18573)
 * [Creating a Vue component](https://github.com/Razpudding/dynamic-dashboard/commit/1e62c3d470bf7e4f1d344c1c0690a02e9aed9802)
-* Setting up routing to different pages
-* Creating a d3 visualization
+* [Setting up routing to different pages](https://github.com/Razpudding/dynamic-dashboard/commit/ae56ae5a6662dced2646d8f627244ee618d498b8)
+* [Creating a d3 visualization](https://github.com/Razpudding/dynamic-dashboard/commit/b1949e264b36605d3236de7a492f4f9ae7a8b7ad)
 * Loading the data once in a central vue method
 * Passing relevant data to each component
 * Refactoring: Moving routes to a router module
