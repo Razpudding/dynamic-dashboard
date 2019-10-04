@@ -8,7 +8,7 @@
 <body>
 	<article id="app">
 		<a v-if="detailPage" href="#">Back</a>
-		<section>
+		<section v-if="!detailPage">
 			{{ message }}
 			<ul>
 				<survey-answer
