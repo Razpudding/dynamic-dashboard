@@ -1,18 +1,21 @@
 Vue.component('survey-answer', {
-  // This component will hold th eblueprint for an answer element
+  // This component will hold the blueprint for an answer element
   // It has the needed data in the props attribute
-  // Ander the needed HTML in the template attribute.
+  // And the needed HTML in the template attribute.
+  // Note how the template string is quite ugly and could use refactoring
   props: {
   	answer: Object,
   },
-  template: '<li>ID: {{ answer.id }},' +
-		     'Voorkeuren: {{ answer.voorkeuren }},' +
-		     'Alcohol per dag: {{ answer.alcohol}}</li>'
+  template: `<li><a :href="'#'+answer.id">ID: {{ answer.id }}</a>,
+		     Voorkeuren: {{ answer.voorkeuren }},
+		     Alcohol per dag: {{ answer.alcohol}}</li>`
 })
+
 
 const app = new Vue({
   el: '#app',
   data: {
+  	currentRoute: window.location.pathname,
   	message: "Hello Dashboard",
     answers: [
     {
@@ -36,5 +39,11 @@ const app = new Vue({
         "id": 3
     }
    	]
+  },
+  created(){
+  	window.addEventListener("hashchange", ()=>{
+  		console.log(window.location.hash)
+  	})
   }
 })
+
