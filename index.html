@@ -7,6 +7,7 @@
 </head>
 <body>
 	<article id="app">
+		<a v-if="detailPage" href="#">Back</a>
 		<section>
 			{{ message }}
 			<ul>
@@ -21,6 +22,7 @@
 			<data-visualization v-if="detailPage"></data-visualization>
 		</section>
 	</article>
+	<script src="https://unpkg.com/d3@5.6.0/dist/d3.min.js"></script>
 	<script src="index.js"></script>
 </body>
 </html>

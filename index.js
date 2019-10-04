@@ -6,13 +6,34 @@ Vue.component('survey-answer', {
   props: {
   	answer: Object,
   },
-  template: `<li><a :href="'#'+answer.id">ID: {{ answer.id }}</a>,
+  template: `<li><a :href="'#data-visualization'+answer.id">ID: {{ answer.id }}</a>,
 		     Voorkeuren: {{ answer.voorkeuren }},
 		     Alcohol per dag: {{ answer.alcohol}}</li>`
 })
 
 Vue.component('data-visualization', {
-	template: `<p>filler</p>`
+	template: `<svg width="960" height="500"></svg>`,
+	mounted(){
+		const el = document.querySelector('svg');
+		const endpoint =
+		  'https://api.data.netwerkdigitaalerfgoed.nl/datasets/hackalod/GVN/services/GVN/sparql';
+		const query = `
+		PREFIX dct: <http://purl.org/dc/terms/>
+
+		SELECT * WHERE {
+		  ?sub dct:created "1893" .
+		} LIMIT 1000
+		`;
+
+		loadData(endpoint, query)
+
+		function loadData(url, query){
+		  d3.json(url + '?query=' + encodeURIComponent(query) + '&format=json').then(data => {
+		    el.innerText = JSON.stringify(data.results)
+		    console.log(data)
+		  })
+		}
+	}
 })
 
 const app = new Vue({
@@ -46,7 +67,11 @@ const app = new Vue({
   },
   created(){
   	window.addEventListener("hashchange", ()=>{
-  		console.log(window.location.hash)
+  		if(window.location.hash.includes("data-visualization")){
+  			this.detailPage = true
+  		} else {
+  			this.detailPage = false
+  		}
   	})
   }
 })
