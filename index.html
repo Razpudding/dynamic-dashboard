@@ -6,16 +6,21 @@
 	<title>Dynamic Dashboard for survey data</title>
 </head>
 <body>
-	<div id="app">
-		{{ message }}
-		<ul>
-		    <survey-answer
-		      v-for="answer in answers"
-		      v-bind:answer="answer"
-		      v-bind:key="answer.id">
-	    </survey-answer>
-	  	</ul>
-	</div>
+	<article id="app">
+		<section>
+			{{ message }}
+			<ul>
+				<survey-answer
+				v-for="answer in answers"
+				v-bind:answer="answer"
+				v-bind:key="answer.id">
+				</survey-answer>
+			</ul>
+		</section>
+		<section id="data-visualization">
+			<data-visualization v-if="detailPage"></data-visualization>
+		</section>
+	</article>
 	<script src="index.js"></script>
 </body>
 </html>

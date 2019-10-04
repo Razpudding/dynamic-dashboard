@@ -7,6 +7,7 @@ I'll try to set out a simple example of how to do that here. If time permits, it
 I've chosen not to use any build tools so as to try to limit the overhead and environment software needed to understand this project. Let's see how that goes. I'll list limitations here:
 
 - Not possible to use single-file Vue components. This forces you to write html in js... Yes I know about template strings and no, I don't think they're a real substitute. 
+- I'm using a # router to enable a SPA-like experience. Proper routing would be nice but it would mean loading different html files which is annoying without node packages.
 
 ## Outline
 - A json file is loaded with some data

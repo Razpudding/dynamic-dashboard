@@ -11,12 +11,16 @@ Vue.component('survey-answer', {
 		     Alcohol per dag: {{ answer.alcohol}}</li>`
 })
 
+Vue.component('data-visualization', {
+	template: `<p>filler</p>`
+})
 
 const app = new Vue({
   el: '#app',
   data: {
   	currentRoute: window.location.pathname,
   	message: "Hello Dashboard",
+  	detailPage: false,
     answers: [
     {
         "voorkeuren": "Frontend",
@@ -46,4 +50,3 @@ const app = new Vue({
   	})
   }
 })
-
