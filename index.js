@@ -14,7 +14,8 @@ Vue.component('survey-answer', {
 Vue.component('data-visualization', {
 	template: `<svg width="960" height="500"></svg>`,
 	mounted(){
-		const el = document.querySelector('svg');
+		//TODO: Maybe don't use svg if we're just adding text elements
+		const svg = d3.select('svg');
 		const endpoint =
 		  'https://api.data.netwerkdigitaalerfgoed.nl/datasets/hackalod/GVN/services/GVN/sparql';
 		const query = `
@@ -29,8 +30,12 @@ Vue.component('data-visualization', {
 
 		function loadData(url, query){
 		  d3.json(url + '?query=' + encodeURIComponent(query) + '&format=json').then(data => {
-		    el.innerText = JSON.stringify(data.results)
 		    console.log(data)
+		    svg.selectAll("text")
+				.data(data.results.bindings)
+				.enter().append("text")
+				.text(d => d.sub.value)
+				.attr('y', (d, i) => { return i * 40 + 40})
 		  })
 		}
 	}
