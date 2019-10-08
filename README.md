@@ -28,7 +28,8 @@ If there's no link yet for a step that means I haven't built it yet. Feel free t
 * [Creating a Vue component](https://github.com/Razpudding/dynamic-dashboard/commit/1e62c3d470bf7e4f1d344c1c0690a02e9aed9802)
 * [Setting up routing to different pages](https://github.com/Razpudding/dynamic-dashboard/commit/ae56ae5a6662dced2646d8f627244ee618d498b8)
 * [Creating a d3 visualization](https://github.com/Razpudding/dynamic-dashboard/commit/b1949e264b36605d3236de7a492f4f9ae7a8b7ad)
-* Loading the data once in a central vue method
+* [Fetching a local data file](https://github.com/Razpudding/dynamic-dashboard/commit/88056dc7df903c8002a46c5bef021ff863beb63d) **Read commit notes!**
+* Fetching remote data
 * Passing relevant data to each component
 * Refactoring: Moving routes to a router module
 
