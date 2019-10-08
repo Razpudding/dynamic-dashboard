@@ -47,28 +47,7 @@ const app = new Vue({
   	currentRoute: window.location.pathname,
   	message: "Hello Dashboard",
   	detailPage: false,
-    answers: [
-    {
-        "voorkeuren": "Frontend",
-        "alcohol": "4",
-        "id": 0
-    },
-    {
-        "voorkeuren": "Frontend, Interaction Design, UX",
-        "alcohol": "5",
-        "id": 1
-    },
-    {
-        "voorkeuren": "Visual Design, Interaction Design, UX, Design Research",
-        "alcohol": "0",
-        "id": 2
-    },
-    {
-        "voorkeuren": "Visual Design, Frontend",
-        "alcohol": "1",
-        "id": 3
-    }
-   	]
+    answers: null,
   },
   created(){
   	window.addEventListener("hashchange", ()=>{
@@ -78,5 +57,8 @@ const app = new Vue({
   			this.detailPage = false
   		}
   	})
+  	fetch('/data/input.json')
+  		.then(data => data.json())
+  		.then(json => this.answers = json)
   }
 })
