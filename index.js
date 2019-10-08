@@ -1,44 +1,12 @@
-Vue.component('survey-answer', {
+Vue.component('result-link', {
   // This component will hold the blueprint for an answer element
   // It has the needed data in the props attribute
   // And the needed HTML in the template attribute.
   // Note how the template string is quite ugly and could use refactoring
   props: {
-  	answer: Object,
+  	result: Object,
   },
-  template: `<li><a :href="'#data-visualization'+answer.id">ID: {{ answer.id }}</a>,
-		     Voorkeuren: {{ answer.voorkeuren }},
-		     Alcohol per dag: {{ answer.alcohol}}</li>`
-})
-
-Vue.component('data-visualization', {
-	template: `<svg width="960" height="500"></svg>`,
-	mounted(){
-		//TODO: Maybe don't use svg if we're just adding text elements
-		const svg = d3.select('svg');
-		const endpoint =
-		  'https://api.data.netwerkdigitaalerfgoed.nl/datasets/hackalod/GVN/services/GVN/sparql';
-		const query = `
-		PREFIX dct: <http://purl.org/dc/terms/>
-
-		SELECT * WHERE {
-		  ?sub dct:created "1893" .
-		} LIMIT 1000
-		`;
-
-		loadData(endpoint, query)
-
-		function loadData(url, query){
-		  d3.json(url + '?query=' + encodeURIComponent(query) + '&format=json').then(data => {
-		    console.log(data)
-		    svg.selectAll("text")
-				.data(data.results.bindings)
-				.enter().append("text")
-				.text(d => d.sub.value)
-				.attr('y', (d, i) => { return i * 40 + 40})
-		  })
-		}
-	}
+  template: `<li><a :href="'#data-visualization'+result.value">Link: {{ result.value }}</a></li>`
 })
 
 const app = new Vue({
@@ -47,7 +15,7 @@ const app = new Vue({
   	currentRoute: window.location.pathname,
   	message: "Hello Dashboard",
   	detailPage: false,
-    answers: null,
+    results: null,
   },
   created(){
   	window.addEventListener("hashchange", ()=>{
@@ -57,8 +25,36 @@ const app = new Vue({
   			this.detailPage = false
   		}
   	})
-  	fetch('/data/input.json')
+	const endpoint =
+	  'https://api.data.netwerkdigitaalerfgoed.nl/datasets/hackalod/GVN/services/GVN/sparql';
+	const query = `
+	PREFIX dct: <http://purl.org/dc/terms/>
+
+	SELECT * WHERE {
+	  ?sub dct:created "1893" .
+	} LIMIT 1000
+	`;
+
+  	fetch(endpoint +"?query="+ encodeURIComponent(query) +"&format=json")
+  		//Extract the json from the html response
   		.then(data => data.json())
-  		.then(json => this.answers = json)
-  }
+  		//Extract the nested data from that json
+  		.then(json => json.results.bindings)
+  		//Rewrite each result to be flat and only contain interesting values
+  		.then(results => {
+  			return results.map( (result, index) => {
+  				return {
+  					//I've added an id value because that helps Vue distinguish different items later on
+  					id: index,
+  					value: result.sub.value,
+  					type: result.sub.type
+  				}
+  			})
+  		})
+  		//Store the results in app.data
+  		.then(results => { 
+  			console.log("Cleaned api results", results)
+  			this.results = results 
+  		})
+	}
 })

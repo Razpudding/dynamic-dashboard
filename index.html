@@ -11,15 +11,12 @@
 		<section v-if="!detailPage">
 			{{ message }}
 			<ul>
-				<survey-answer
-				v-for="answer in answers"
-				v-bind:answer="answer"
-				v-bind:key="answer.id">
-				</survey-answer>
+				<result-link
+				v-for="result in results"
+				v-bind:result="result"
+				v-bind:key="result.id">
+				</result-link>
 			</ul>
-		</section>
-		<section id="data-visualization">
-			<data-visualization v-if="detailPage"></data-visualization>
 		</section>
 	</article>
 	<script src="https://unpkg.com/d3@5.6.0/dist/d3.min.js"></script>
