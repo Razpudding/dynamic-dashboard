@@ -10,11 +10,18 @@ I've chosen not to use any build tools so as to try to limit the overhead and en
 
 - It's not possible to use single-file Vue components without a proper build environment like node. This forces you to write html in js... Yes I know about template strings and no, I don't think they're a real substitute. 
 - I'm using a # router to enable a SPA-like experience. Proper routing would be nice but it would mean loading different html files which is annoying without node packages.
+- Ah I've just realized what would be a nice option.
+    + Have a property on the Vue instance that keeps track of the currentTheme
+    + If no theme is selected, the main 'themes' page will be shown
+    + if a theme-link is clicked, the currentTheme var should be updated
+    + That will trigger a v-if which wraps the theme-page component. It will bind the currentTheme to the component's props.
+    + The main 'themes' page will be visible depending on whether currentTheme is null 🎬
 - It might be a good idea to keep this to a Vue+ Loading data example and leave more complex datavisualizations for a separate example. The app could work like this
     + Load some data in a vue method(for instance from a SPARQL endpoint as my students will be using that)
     + Show different aspects of that data on different detail pages.
     + Have a detailpage for each data entry
     + Have some overviewpages showing different aspects (like images, year created etc)
+
 
 ## Outline
 - A json file is loaded with some data
