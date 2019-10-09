@@ -1,6 +1,8 @@
 # dynamic-dashboard
 An example of how to use a framework to dynamically generate components from data.
 
+I've used this repo to go through various steps you might take when creating an app with SPARQL data. The app has gone through different variations that are outlined in the steps below.
+
 If you want so see a live view of the app, click on the Github Pages example in the repo description. If you want to edit the code in a WYSIWYG check out [this vizhub demo](https://beta.vizhub.com/Razpudding/dcffa6b746ac4d1c8207aab5497ae57c)(I can't promise it will be up-to-date with the latest changes).
 
 ## Concept
@@ -22,13 +24,6 @@ I've chosen not to use any build tools so as to try to limit the overhead and en
     + Have a detailpage for each data entry
     + Have some overviewpages showing different aspects (like images, year created etc)
 
-
-## Outline
-- A json file is loaded with some data
-- Vue is used to generate components using that data
-- Different views are created of the data (each on their own page)
-- The different views are presented using a d3 datavisualization
-
 ## Steps
 You can follow along with the progress by checking these commits in order. I'll build up the application in clear steps.
 If there's no link yet for a step that means I haven't built it yet. Feel free to send pull requests for those ;)
@@ -40,7 +35,9 @@ If there's no link yet for a step that means I haven't built it yet. Feel free t
 * [Fetching a local data file](https://github.com/Razpudding/dynamic-dashboard/commit/88056dc7df903c8002a46c5bef021ff863beb63d) **Read commit notes!**
 * [Fetching remote data](https://github.com/Razpudding/dynamic-dashboard/commit/df253364ba9b9c77eef6e34c975b3c8b6077e0d5)
 * [Passing relevant data to each component](https://github.com/Razpudding/dynamic-dashboard/commit/4aa1d67eeb73d788e98505148b009b35c1a1bc1c)
-* Have components request their own data(https://github.com/Razpudding/dynamic-dashboard/commit/cb7c8a66f867d3e6a1383d11a8c1eb9dacd4ed95)
+* [Have components request their own data](https://github.com/Razpudding/dynamic-dashboard/commit/cb7c8a66f867d3e6a1383d11a8c1eb9dacd4ed95)
+* Refactor the hash-router into the proposed solution above
+* Load different data after user interaction
 * Refactoring: Moving routes to a router module
 
 ## Credits
