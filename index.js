@@ -19,17 +19,26 @@ Vue.component('theme-page', {
 		}
 	},
 	mounted(){
+		//Set the theme depending on the hash
 		this.theme = window.location.hash.split("-").pop()
-		console.log(this.theme)
 		const query = `
 			PREFIX dct: <${app.prefixes.dct}>
+			PREFIX gvn: <${app.prefixes.gvn}>
+			PREFIX xml: <${app.prefixes.xml}>
 			SELECT * WHERE {
-				?subj xml:theme  <${app.prefixes.gvn + this.theme}> .
-			} LIMIT 1000
+				?subj xml:theme  gvn:${this.theme} .
+			} LIMIT 100
 		`
-		console.log("query", query)
 		app.fetchSparqlData(app.endpoints.gvn, query)
-			.then(data => {console.log(data)})
+			.then(json => json.results.bindings)
+  			.then(results => {
+  				const svg = d3.select('svg');
+			    svg.selectAll("text")
+					.data(results)
+					.enter().append("text")
+					.text(d => d.subj.value)
+					.attr('y', (d, i) => { return i * 40 + 40})
+		})
 	}
 })
 
@@ -84,7 +93,6 @@ const app = new Vue({
   				}
   			})
   		})
-  		
   		//Store the results in app.data
   		.then(results => { 
   			console.log("Cleaned api results", results)
@@ -94,7 +102,7 @@ const app = new Vue({
   	methods: {
 		// Fetch some data from a url and return the results
 		fetchSparqlData: async function(endpoint, query){
-			console.log("fetching", endpoint)
+			console.log("fetching", endpoint, query)
 			const response = await fetch(endpoint +"?query="+ encodeURIComponent(query) +"&format=json")
 			//Extract the json from the html response
 			const data = response.json()
