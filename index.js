@@ -8,7 +8,23 @@ Vue.component('result-link', {
   props: {
   	result: Object,
   },
-  template: `<li><a :href="'#'+result.theme">Thema: {{ result.theme }}</a></li>`,
+  template: `<li><a :href="'#theme-'+result.theme">Thema: {{ result.theme }}</a></li>`,
+})
+
+Vue.component('theme-page', {
+	template: `<svg width="960" height="500"></svg>`,
+	mounted(){
+		const endpoint =
+		  'https://api.data.netwerkdigitaalerfgoed.nl/datasets/hackalod/GVN/services/GVN/sparql';
+		const query = `
+		PREFIX dct: <http://purl.org/dc/terms/>
+		SELECT * WHERE {
+		  ?sub dct:created "1893" .
+		} LIMIT 1000
+		`
+		app.fetchSparqlData(endpoint, query)
+			.then(data => {console.log(data)})
+	}
 })
 
 const app = new Vue({
@@ -21,7 +37,7 @@ const app = new Vue({
   },
   created(){
   	window.addEventListener("hashchange", ()=>{
-  		if(window.location.hash.includes("data-visualization")){
+  		if(window.location.hash.includes("#theme-")){
   			this.detailPage = true
   		} else {
   			this.detailPage = false
@@ -38,10 +54,8 @@ const app = new Vue({
 	 	 ?subj xml:theme  ?obj .
 		} LIMIT 1000
 	`
-
-  	fetch(endpoint +"?query="+ encodeURIComponent(query) +"&format=json")
-  		//Extract the json from the html response
-  		.then(data => data.json())
+	//Call the fetchSparqlData method on the Vue instance
+  	this.fetchSparqlData(endpoint, query)
   		//Extract the nested data from that json. This nesting will be different for every API btw
   		.then(json => json.results.bindings)
   		//Rewrite each result to be flat and only contain interesting values
@@ -59,10 +73,21 @@ const app = new Vue({
   				}
   			})
   		})
+  		
   		//Store the results in app.data
   		.then(results => { 
   			console.log("Cleaned api results", results)
   			this.results = results 
   		})
+	},
+	methods: {
+		// Fetch some data from a url and return the results
+		fetchSparqlData: async function(endpoint, query){
+			console.log("fetching", endpoint)
+			const response = await fetch(endpoint +"?query="+ encodeURIComponent(query) +"&format=json")
+			//Extract the json from the html response
+			const data = response.json()
+			return data
+		}
 	}
 })
