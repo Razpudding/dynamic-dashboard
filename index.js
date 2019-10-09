@@ -14,15 +14,13 @@ Vue.component('result-link', {
 Vue.component('theme-page', {
 	template: `<svg width="960" height="500"></svg>`,
 	mounted(){
-		const endpoint =
-		  'https://api.data.netwerkdigitaalerfgoed.nl/datasets/hackalod/GVN/services/GVN/sparql';
 		const query = `
 		PREFIX dct: <http://purl.org/dc/terms/>
 		SELECT * WHERE {
 		  ?sub dct:created "1893" .
 		} LIMIT 1000
 		`
-		app.fetchSparqlData(endpoint, query)
+		app.fetchSparqlData(app.endpoints.gvn, query)
 			.then(data => {console.log(data)})
 	}
 })
@@ -34,6 +32,9 @@ const app = new Vue({
   	message: "Hello Dashboard",
   	detailPage: false,
     results: null,
+    endpoints: {
+    	gvn: "https://api.data.netwerkdigitaalerfgoed.nl/datasets/hackalod/GVN/services/GVN/sparql"
+    }
   },
   created(){
   	window.addEventListener("hashchange", ()=>{
@@ -43,8 +44,6 @@ const app = new Vue({
   			this.detailPage = false
   		}
   	})
-	const endpoint =
-	  'https://api.data.netwerkdigitaalerfgoed.nl/datasets/hackalod/GVN/services/GVN/sparql';
 	const prefixGVN = 'https://data.netwerkdigitaalerfgoed.nl/hackalod/gvn/'
 	const query = `
 		PREFIX gvn: <${prefixGVN}>
@@ -55,7 +54,7 @@ const app = new Vue({
 		} LIMIT 1000
 	`
 	//Call the fetchSparqlData method on the Vue instance
-  	this.fetchSparqlData(endpoint, query)
+  	this.fetchSparqlData(this.endpoints.gvn, query)
   		//Extract the nested data from that json. This nesting will be different for every API btw
   		.then(json => json.results.bindings)
   		//Rewrite each result to be flat and only contain interesting values
