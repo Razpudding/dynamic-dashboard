@@ -1,8 +1,10 @@
 Vue.component('result-link', {
-  // This component will hold the blueprint for an answer element
+  // This component will hold the blueprint a theme link
   // It has the needed data in the props attribute
   // And the needed HTML in the template attribute.
-  // Note how the template string is quite ugly and could use refactoring
+  // Having some trouble initializing a component when someone clicks on this link
+  //  Might be able to use this: https://stackoverflow.com/questions/40905292/vue-js-2-how-to-initializeconstruct-a-vue-component-from-a-vue-file
+  //  Or if possible: this
   props: {
   	result: Object,
   },

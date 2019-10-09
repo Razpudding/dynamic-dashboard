@@ -31,7 +31,7 @@ If there's no link yet for a step that means I haven't built it yet. Feel free t
 * [Setting up routing to different pages](https://github.com/Razpudding/dynamic-dashboard/commit/ae56ae5a6662dced2646d8f627244ee618d498b8)
 * [Creating a d3 visualization](https://github.com/Razpudding/dynamic-dashboard/commit/b1949e264b36605d3236de7a492f4f9ae7a8b7ad)
 * [Fetching a local data file](https://github.com/Razpudding/dynamic-dashboard/commit/88056dc7df903c8002a46c5bef021ff863beb63d) **Read commit notes!**
-* [Fetching remote data](https://github.com/Razpudding/dynamic-dashboard/commit/ac2f0c33f4e36361628c8fe5d61b9c33657d74fc)
+* [Fetching remote data](https://github.com/Razpudding/dynamic-dashboard/commit/df253364ba9b9c77eef6e34c975b3c8b6077e0d5)
 * Passing relevant data to each component
 * Have components request their own data
 * Refactoring: Moving routes to a router module
