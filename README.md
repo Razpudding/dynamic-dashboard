@@ -1,5 +1,7 @@
 # dynamic-dashboard
-An example of how to use a framework to dynamically generate components from data
+An example of how to use a framework to dynamically generate components from data.
+
+If you want so see a live view of the app, click on the Github Pages example in the repo description. If you want to edit the code in a WYSIWYG check out [this vizhub demo](https://beta.vizhub.com/Razpudding/dcffa6b746ac4d1c8207aab5497ae57c)(I can't promise it will be up-to-date with the latest changes).
 
 ## Concept
 I want to show students how to use a front-end framework to dynamically generate components from a data source. One useful example would be to create visualizations from a data source.
