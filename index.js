@@ -6,7 +6,7 @@ Vue.component('result-link', {
   props: {
   	result: Object,
   },
-  template: `<li><a :href="'#data-visualization'+result.value">Link: {{ result.value }}</a></li>`
+  template: `<li><a :href="'#'+result.theme">Thema: {{ result.theme }}</a></li>`,
 })
 
 const app = new Vue({
@@ -27,27 +27,33 @@ const app = new Vue({
   	})
 	const endpoint =
 	  'https://api.data.netwerkdigitaalerfgoed.nl/datasets/hackalod/GVN/services/GVN/sparql';
+	const prefixGVN = 'https://data.netwerkdigitaalerfgoed.nl/hackalod/gvn/'
 	const query = `
-	PREFIX dct: <http://purl.org/dc/terms/>
+		PREFIX gvn: <${prefixGVN}>
+		PREFIX xml: <http://xmlns.com/foaf/0.1/>
 
-	SELECT * WHERE {
-	  ?sub dct:created "1893" .
-	} LIMIT 1000
-	`;
+		SELECT distinct ?obj WHERE {
+	 	 ?subj xml:theme  ?obj .
+		} LIMIT 1000
+	`
 
   	fetch(endpoint +"?query="+ encodeURIComponent(query) +"&format=json")
   		//Extract the json from the html response
   		.then(data => data.json())
-  		//Extract the nested data from that json
+  		//Extract the nested data from that json. This nesting will be different for every API btw
   		.then(json => json.results.bindings)
   		//Rewrite each result to be flat and only contain interesting values
   		.then(results => {
+  			console.log(results)
   			return results.map( (result, index) => {
   				return {
   					//I've added an id value because that helps Vue distinguish different items later on
   					id: index,
-  					value: result.sub.value,
-  					type: result.sub.type
+  					url: result.obj.value,
+  					type: result.obj.type,
+  					//If you're confused about this next line, try experimentig with split+pop on a string
+  					// in your browser
+  					theme: result.obj.value.split(prefixGVN).pop()
   				}
   			})
   		})
