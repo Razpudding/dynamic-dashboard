@@ -37,6 +37,7 @@ If there's no link yet for a step that means I haven't built it yet. Feel free t
 * [Passing relevant data to each component](https://github.com/Razpudding/dynamic-dashboard/commit/4aa1d67eeb73d788e98505148b009b35c1a1bc1c)
 * [Have components request their own data](https://github.com/Razpudding/dynamic-dashboard/commit/cb7c8a66f867d3e6a1383d11a8c1eb9dacd4ed95)
 * Refactor the hash-router into the proposed solution above
+* Show something useful instead of a list of links (basic d3 vis would be nice)
 * Load different data after user interaction
 * Refactoring: Moving routes to a router module
 
