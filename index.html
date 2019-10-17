@@ -3,13 +3,13 @@
 <head>
 	<meta charset="UTF-8">
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-	<title>Dynamic Dashboard for survey data</title>
+	<title>Dashboard for ethnographic data</title>
 </head>
 <body>
 	<article id="app">
 		<a v-if="detailPage" href="#">Back</a>
 		<section v-if="!detailPage">
-			{{ message }}
+			<h1>Onderwerpen</h1>
 			<ul>
 				<result-link
 				v-for="result in results"

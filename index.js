@@ -5,7 +5,7 @@ Vue.component('result-link', {
   props: {
   	result: Object,
   },
-  template: `<li><a :href="'#theme-'+result.theme">Thema: {{ result.theme }}</a></li>`,
+  template: `<li><a :href="'#theme-'+result.theme">{{ result.label }}</a></li>`,
 })
 
 Vue.component('theme-page', {
@@ -24,7 +24,7 @@ Vue.component('theme-page', {
 			PREFIX xml: <${app.prefixes.xml}>
 			SELECT * WHERE {
 				?subj dc:subject  <${this.theme}> .
-			} LIMIT 100
+			} LIMIT 30
 		`
 		app.fetchSparqlData(app.endpoints.nmvw, query)
 			.then(json => json.results.bindings)
@@ -43,7 +43,6 @@ const app = new Vue({
 	el: '#app',
 	data: {
 		currentRoute: window.location.pathname,
-		message: "Hello Dashboard",
 		detailPage: false,
 		results: null,
 		endpoints: {
@@ -69,10 +68,10 @@ const app = new Vue({
 		PREFIX dc: <${this.prefixes.dc}>
 		PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
-		SELECT distinct ?obj WHERE {
+		SELECT distinct ?obj ?objLabel WHERE {
 		  ?subj dc:subject  ?obj .
 		  ?obj skos:prefLabel ?objLabel .
-		} LIMIT 1000
+		} LIMIT 10
 		`
 	//Call the fetchSparqlData method on the Vue instance
 	this.fetchSparqlData(this.endpoints.nmvw, query)
@@ -80,6 +79,7 @@ const app = new Vue({
   		.then(json => json.results.bindings)
   		//Rewrite each result to be flat and only contain interesting values
   		.then(results => {
+  			console.log('results:', results)
   			return results.map( (result, index) => {
   				return {
   					//I've added an id value because that helps Vue distinguish different items later on
@@ -88,7 +88,8 @@ const app = new Vue({
   					type: result.obj.type,
   					//If you're confused about this next line, try experimentig with split+pop on a string
   					// in your browser
-  					theme: result.obj.value.split(this.prefixes.nmvw).pop()
+  					theme: result.obj.value.split(this.prefixes.nmvw).pop(),
+  					label: result.objLabel.value
   				}
   			})
   		})
