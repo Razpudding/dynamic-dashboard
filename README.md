@@ -11,13 +11,6 @@ I'll try to set out a simple example of how to do that here. If time permits, it
 I've chosen not to use any build tools so as to try to limit the overhead and environment software needed to understand this project. Let's see how that goes.
 
 - It's not possible to use single-file Vue components without a proper build environment like node. This forces you to write html in js... Yes I know about template strings and no, I don't think they're a real substitute. 
-- I'm using a # router to enable a SPA-like experience. Proper routing would be nice but it would mean loading different html files which is annoying without node packages.
-- Ah I've just realized what would be a nice option.
-    + Have a property on the Vue instance that keeps track of the currentTheme
-    + If no theme is selected, the main 'themes' page will be shown
-    + if a theme-link is clicked, the currentTheme var should be updated
-    + That will trigger a v-if which wraps the theme-page component. It will bind the currentTheme to the component's props.
-    + The main 'themes' page will be visible depending on whether currentTheme is null 🎬
 - It might be a good idea to keep this to a Vue+ Loading data example and leave more complex datavisualizations for a separate example. The app could work like this
     + Load some data in a vue method(for instance from a SPARQL endpoint as my students will be using that)
     + Show different aspects of that data on different detail pages.
@@ -36,7 +29,7 @@ If there's no link yet for a step that means I haven't built it yet. Feel free t
 * [Fetching remote data](https://github.com/Razpudding/dynamic-dashboard/commit/df253364ba9b9c77eef6e34c975b3c8b6077e0d5)
 * [Passing relevant data to each component](https://github.com/Razpudding/dynamic-dashboard/commit/4aa1d67eeb73d788e98505148b009b35c1a1bc1c)
 * [Have components request their own data](https://github.com/Razpudding/dynamic-dashboard/commit/cb7c8a66f867d3e6a1383d11a8c1eb9dacd4ed95)
-* Refactor the hash-router into the proposed solution above
+* [Refactor the hash-router into the proposed solution above](https://github.com/Razpudding/dynamic-dashboard/commit/ae175cd94bf209adef31b01477c163de1372c1b5)
 * Show something useful instead of a list of links (basic d3 vis would be nice)
 * Load different data after user interaction
 * Refactoring: Moving routes to a router module
