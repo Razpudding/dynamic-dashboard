@@ -5,25 +5,17 @@ Vue.component('result-link', {
   props: {
   	result: Object,
   },
-  template: `<li><a :href="'#theme-'+result.theme">{{ result.label }}</a></li>`,
+  template: `<li>{{ result.label }}</li>`,
 })
 
 Vue.component('theme-page', {
 	template: `<svg width="960" height="500"></svg>`,
-	data(){
-		return {
-			theme: null
-		}
-	},
 	mounted(){
-		//Set the theme depending on the hash
-		this.theme = window.location.hash.split("-").pop()
-		console.log(this.theme)
 		const query = `
 			PREFIX dc: <${app.prefixes.dc}>
 			PREFIX xml: <${app.prefixes.xml}>
 			SELECT * WHERE {
-				?subj dc:subject  <${this.theme}> .
+				?subj dc:subject  <${app.currentTheme}> .
 			} LIMIT 30
 		`
 		app.fetchSparqlData(app.endpoints.nmvw, query)
@@ -43,6 +35,7 @@ const app = new Vue({
 	el: '#app',
 	data: {
 		currentRoute: window.location.pathname,
+		currentTheme: null,
 		detailPage: false,
 		results: null,
 		endpoints: {
@@ -107,6 +100,9 @@ const app = new Vue({
 			//Extract the json from the html response
 			const data = response.json()
 			return data
+		},
+		test: function(){
+			console.log("works")
 		}
 	}
 })

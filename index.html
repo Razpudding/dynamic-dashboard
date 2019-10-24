@@ -7,19 +7,21 @@
 </head>
 <body>
 	<article id="app">
-		<a v-if="detailPage" href="#">Back</a>
+		<button v-if="detailPage" @click="detailPage = false">Back</button>
 		<section v-if="!detailPage">
 			<h1>Onderwerpen</h1>
 			<ul>
 				<result-link
 				v-for="result in results"
 				v-bind:result="result"
-				v-bind:key="result.id">
+				v-bind:key="result.id"
+				@click.native="currentTheme = result.theme; detailPage = true"
+				>
 				</result-link>
 			</ul>
 		</section>
-		<section v-if="detailPage">
-			<theme-page></theme-page>
+		<section>
+			<theme-page v-if="detailPage"></theme-page>
 		</section>
 	</article>
 	<script src="https://unpkg.com/d3@5.6.0/dist/d3.min.js"></script>
