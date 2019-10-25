@@ -45,7 +45,8 @@ const app = new Vue({
 			gvn: 'https://data.netwerkdigitaalerfgoed.nl/hackalod/gvn/',
 			xml: 'http://xmlns.com/foaf/0.1/',
 			dct: 'http://purl.org/dc/terms/',
-			dc:  'http://purl.org/dc/elements/1.1/'
+			dc:  'http://purl.org/dc/elements/1.1/',
+			skos:'http://www.w3.org/2004/02/skos/core#'
 		},
 	},
 	created(){
@@ -59,12 +60,12 @@ const app = new Vue({
 		//This query will help us get the different available themes in our dataset
 		const query = `
 		PREFIX dc: <${this.prefixes.dc}>
-		PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+		PREFIX skos: <${this.prefixes.skos}>
 
 		SELECT distinct ?obj ?objLabel WHERE {
 		  ?subj dc:subject  ?obj .
 		  ?obj skos:prefLabel ?objLabel .
-		} LIMIT 10
+		} LIMIT 30
 		`
 	//Call the fetchSparqlData method on the Vue instance
 	this.fetchSparqlData(this.endpoints.nmvw, query)
