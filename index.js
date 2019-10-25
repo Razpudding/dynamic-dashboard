@@ -34,7 +34,6 @@ Vue.component('theme-page', {
 const app = new Vue({
 	el: '#app',
 	data: {
-		currentRoute: window.location.pathname,
 		currentTheme: null,
 		detailPage: false,
 		results: null,
@@ -50,13 +49,6 @@ const app = new Vue({
 		},
 	},
 	created(){
-		window.addEventListener("hashchange", ()=>{
-			if(window.location.hash.includes("#theme-")){
-				this.detailPage = true
-			} else {
-				this.detailPage = false
-			}
-		})
 		//This query will help us get the different available themes in our dataset
 		const query = `
 		PREFIX dc: <${this.prefixes.dc}>
