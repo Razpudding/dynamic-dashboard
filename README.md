@@ -10,12 +10,11 @@ I want to show students how to use a front-end framework to dynamically generate
 I'll try to set out a simple example of how to do that here. If time permits, it will include soms d3 visualizations, if not, just a component generation pattern.
 I've chosen not to use any build tools so as to try to limit the overhead and environment software needed to understand this project. Let's see how that goes.
 
-- It's not possible to use single-file Vue components without a proper build environment like node. This forces you to write html in js... Yes I know about template strings and no, I don't think they're a real substitute. 
-- It might be a good idea to keep this to a Vue+ Loading data example and leave more complex datavisualizations for a separate example. The app could work like this
-    + Load some data in a vue method(for instance from a SPARQL endpoint as my students will be using that)
-    + Show different aspects of that data on different detail pages.
-    + Have a detailpage for each data entry
-    + Have some overviewpages showing different aspects (like images, year created etc)
+## Functionality
+- Data is loaded in a vue method from a SPARQL endpoint
+- The stored data is used to render a list of themes available in the data
+- Each theme links to a detailpage which loads example works of that theme
+- The whole thing functions without routing but instead uses conditional content loading.
 
 ## Steps
 You can follow along with the progress by checking these commits in order. I'll build up the application in clear steps.
@@ -29,10 +28,9 @@ If there's no link yet for a step that means I haven't built it yet. Feel free t
 * [Fetching remote data](https://github.com/Razpudding/dynamic-dashboard/commit/df253364ba9b9c77eef6e34c975b3c8b6077e0d5)
 * [Passing relevant data to each component](https://github.com/Razpudding/dynamic-dashboard/commit/4aa1d67eeb73d788e98505148b009b35c1a1bc1c)
 * [Have components request their own data](https://github.com/Razpudding/dynamic-dashboard/commit/cb7c8a66f867d3e6a1383d11a8c1eb9dacd4ed95)
-* [Refactor the hash-router into the proposed solution above](https://github.com/Razpudding/dynamic-dashboard/commit/ae175cd94bf209adef31b01477c163de1372c1b5)
+* [Refactor the hash-router into the proposed solution above](https://github.com/Razpudding/dynamic-dashboard/commit/c65fbbd23ad21869aa10182548d4d59135d0da68)
 * Show something useful instead of a list of links (basic d3 vis would be nice)
 * Load different data after user interaction
-* Refactoring: Moving routes to a router module
 
 ## Credits
 A lot of the work here has been adapted from [Vue's excellent starters guide](https://vuejs.org/v2/guide)
