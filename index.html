@@ -16,13 +16,14 @@
 				v-for="result in results"
 				v-bind:result="result"
 				v-bind:key="result.id"
-				@click.native="currentTheme = result.theme; detailPage = true"
+				@click.native="setTheme(result)"
 				>
 				</result-link>
 			</ul>
 		</section>
-		<section>
-			<theme-page v-if="detailPage"></theme-page>
+		<section v-if="detailPage">
+			<h1> {{ currentTheme }} </h1>
+			<theme-page></theme-page>
 		</section>
 	</article>
 	<script src="index.js"></script>

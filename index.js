@@ -27,8 +27,8 @@ Vue.component('theme-page', {
 		const query = `
 			PREFIX dc: <${app.prefixes.dc}>
 			SELECT * WHERE {
-				?subj dc:subject  <${app.currentTheme}> .
-			} LIMIT 30
+				?subj dc:subject  <${app.currentThemeId}> .
+			} LIMIT ${app.sparqlLimit}
 		`
 		app.fetchSparqlData(app.endpoints.nmvw, query)
 			.then(json => json.results.bindings)
@@ -40,8 +40,10 @@ const app = new Vue({
 	el: '#app',
 	data: {
 		currentTheme: null,
+		currentThemeId: null,
 		detailPage: false,
 		results: null,
+		sparqlLimit: 30,
 		endpoints: {
 			nmvw: "https://api.data.netwerkdigitaalerfgoed.nl/datasets/ivo/NMVW/services/NMVW-40/sparql"
 		},
@@ -59,7 +61,7 @@ const app = new Vue({
 		SELECT distinct ?obj ?objLabel WHERE {
 		  ?subj dc:subject  ?obj .
 		  ?obj skos:prefLabel ?objLabel .
-		} LIMIT 30
+		} LIMIT ${this.sparqlLimit}
 		`
 	//Call the fetchSparqlData method on the Vue instance
 	this.fetchSparqlData(this.endpoints.nmvw, query)
@@ -75,7 +77,7 @@ const app = new Vue({
   					type: result.obj.type,
   					//If you're confused about this next line, try experimentig with split+pop on a string
   					// in your browser
-  					theme: result.obj.value.split(this.prefixes.nmvw).pop(),
+  					themeId: result.obj.value.split(this.prefixes.nmvw).pop(),
   					label: result.objLabel.value
   				}
   			})
@@ -95,5 +97,11 @@ const app = new Vue({
 			const data = response.json()
 			return data
 		},
+		setTheme(theme){
+			console.log("set called with", theme)
+			this.currentThemeId = theme.themeId
+			this.currentTheme = theme.label
+			this.detailPage = true
+		}
 	}
 })
