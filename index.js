@@ -14,8 +14,8 @@ Vue.component('theme-page', {
 	//	Because we want to be able to change that data in the mounted function
 	template: `
 		<ul>
-			<li v-for="result in this.results"><a :href="result.subj.value">
-				{{ result.subj.value}}
+			<li v-for="result in this.results"><a :href="result.subj.value" target="_blank">
+				{{ result.title.value}}
 			</a></li>
 		</ul>`,
 	data: function(){
@@ -28,11 +28,15 @@ Vue.component('theme-page', {
 			PREFIX dc: <${app.prefixes.dc}>
 			SELECT * WHERE {
 				?subj dc:subject  <${app.currentThemeId}> .
+				?subj dc:title ?title
 			} LIMIT ${app.sparqlLimit}
 		`
 		app.fetchSparqlData(app.endpoints.nmvw, query)
 			.then(json => json.results.bindings)
-  			.then(results => this.results = results)
+  			.then(results => { 
+  				// console.log("Theme results", results)
+  				this.results = results 
+  		})
 	}
 })
 
@@ -98,7 +102,6 @@ const app = new Vue({
 			return data
 		},
 		setTheme(theme){
-			console.log("set called with", theme)
 			this.currentThemeId = theme.themeId
 			this.currentTheme = theme.label
 			this.detailPage = true
