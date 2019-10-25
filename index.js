@@ -5,29 +5,34 @@ Vue.component('result-link', {
   props: {
   	result: Object,
   },
-  template: `<li>{{ result.label }}</li>`,
+  template: `<li class="link">{{ result.label }}</li>`,
 })
 
 Vue.component('theme-page', {
-	template: `<svg width="960" height="500"></svg>`,
+	// This component holds the blueprint for a theme page
+	// Note how this component use the data function and not props
+	//	Because we want to be able to change that data in the mounted function
+	template: `
+		<ul>
+			<li v-for="result in this.results"><a :href="result.subj.value">
+				{{ result.subj.value}}
+			</a></li>
+		</ul>`,
+	data: function(){
+		return {
+			results: null,
+		}
+	},
 	mounted(){
 		const query = `
 			PREFIX dc: <${app.prefixes.dc}>
-			PREFIX xml: <${app.prefixes.xml}>
 			SELECT * WHERE {
 				?subj dc:subject  <${app.currentTheme}> .
 			} LIMIT 30
 		`
 		app.fetchSparqlData(app.endpoints.nmvw, query)
 			.then(json => json.results.bindings)
-  			.then(results => {
-  				const svg = d3.select('svg');
-			    svg.selectAll("text")
-					.data(results)
-					.enter().append("text")
-					.text(d => d.subj.value)
-					.attr('y', (d, i) => { return i * 40 + 40})
-		})
+  			.then(results => this.results = results)
 	}
 })
 
@@ -41,9 +46,6 @@ const app = new Vue({
 			nmvw: "https://api.data.netwerkdigitaalerfgoed.nl/datasets/ivo/NMVW/services/NMVW-40/sparql"
 		},
 		prefixes: {
-			gvn: 'https://data.netwerkdigitaalerfgoed.nl/hackalod/gvn/',
-			xml: 'http://xmlns.com/foaf/0.1/',
-			dct: 'http://purl.org/dc/terms/',
 			dc:  'http://purl.org/dc/elements/1.1/',
 			skos:'http://www.w3.org/2004/02/skos/core#'
 		},
@@ -65,7 +67,6 @@ const app = new Vue({
   		.then(json => json.results.bindings)
   		//Rewrite each result to be flat and only contain interesting values
   		.then(results => {
-  			console.log('results:', results)
   			return results.map( (result, index) => {
   				return {
   					//I've added an id value because that helps Vue distinguish different items later on
@@ -94,8 +95,5 @@ const app = new Vue({
 			const data = response.json()
 			return data
 		},
-		test: function(){
-			console.log("works")
-		}
 	}
 })
